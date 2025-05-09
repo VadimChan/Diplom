@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учебное пособие по C++</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 20px;
+            margin: 0 5px;
+            padding: 8px 20px;
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-pills .nav-link:not(.active):hover {
+            background-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .section-title {
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .topic-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent);
+        }
+
+        .topic-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .author-note {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-pills {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 15px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-pills .nav-link {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 mb-4">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo" class="logo">
+                <span class="text-white fw-bold fs-5">C++ Учебник</span>
+            </a>
+        </div>
+
+        <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item">
+                <a href="#home" class="nav-link active" data-bs-toggle="pill">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a href="#basics" class="nav-link" data-bs-toggle="pill">Основы</a>
+            </li>
+            <li class="nav-item">
+                <a href="#control" class="nav-link" data-bs-toggle="pill">Контроль</a>
+            </li>
+            <li class="nav-item">
+                <a href="#oop" class="nav-link" data-bs-toggle="pill">ООП</a>
+            </li>
+            <li class="nav-item">
+                <a href="#pro" class="nav-link" data-bs-toggle="pill">Pro</a>
+            </li>
+        </ul>
+    </header>
+
+    <main class="container my-4">
+        <div class="tab-content">
+            <!-- Главная страница -->
+            <div class="tab-pane fade show active" id="home">
+                <div class="content-section">
+                    <h2 class="section-title">Добро пожаловать в учебное пособие по C++</h2>
+                    <p>Этот ресурс разработан для систематического изучения языка программирования C++ от основ до продвинутых концепций.</p>
+
+                    <div class="author-note">
+                        <h4><i class="bi bi-person-circle"></i> Работа выполнена</h4>
+                        <p>Учеником группы ИТ-408 Богодуховым Вадимом Евгеньевичем</p>
+                        <p class="mb-0">2021-2025 учебный год</p>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <i class="bi bi-journal-bookmark feature-icon"></i>
+                                <h3>Структура пособия</h3>
+                                <p>Пособие разделено на 4 логических блока, каждый из которых охватывает ключевые аспекты языка C++.</p>
+                                <ul>
+                                    <li>Основы синтаксиса</li>
+                                    <li>Управление потоком выполнения</li>
+                                    <li>Объектно-ориентированное программирование</li>
+                                    <li>Продвинутые техники</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <i class="bi bi-code-square feature-icon"></i>
+                                <h3>Практические примеры</h3>
+                                <p>Каждый раздел содержит многочисленные примеры кода с подробными объяснениями.</p>
+                                <p>Пример простейшей программы на C++:</p>
+                                <div class="code-block">
+                                    <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    std::cout << "Привет, мир!";
+    return 0;
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-lightbulb"></i> История C++</h4>
+                                <p>C++ был создан Бьёрном Страуструпом в 1979 году в Bell Labs как расширение языка C. Первый стандарт вышел в 1998 году.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-gear"></i> Особенности</h4>
+                                <ul>
+                                    <li>Компилируемый язык</li>
+                                    <li>Поддержка ООП</li>
+                                    <li>Низкоуровневый доступ</li>
+                                    <li>Высокая производительность</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-graph-up"></i> Применение</h4>
+                                <p>C++ широко используется в разработке игр, операционных систем, высоконагруженных серверов и научных вычислениях.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Основы -->
+            <div class="tab-pane fade" id="basics">
+                <div class="content-section">
+                    <h2 class="section-title">Основы C++</h2>
+                    <p>Фундаментальные концепции и базовый синтаксис языка программирования C++.</p>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 25%"></div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-1-circle"></i> Первая программа</h4>
+                        <p>Базовая структура программы на C++ включает директивы препроцессора, функцию main() и операторы.</p>
+                        <div class="code-block">
+                            <pre><code>#include &lt;iostream&gt;  // Директива для ввода/вывода
+
+// Главная функция программы
+int main() {
+    // Вывод сообщения в консоль
+    std::cout << "Моя первая программа на C++!\n";
+
+    // Возврат значения
+    return 0;
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-2-circle"></i> Переменные и типы данных</h4>
+                                <p>C++ поддерживает различные типы данных:</p>
+                                <ul>
+                                    <li><strong>int</strong> - целые числа</li>
+                                    <li><strong>float/double</strong> - числа с плавающей точкой</li>
+                                    <li><strong>char</strong> - символы</li>
+                                    <li><strong>bool</strong> - логические значения</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre><code>int age = 25;
+double price = 99.95;
+char grade = 'A';
+bool is_valid = true;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-3-circle"></i> Операторы</h4>
+                                <p>C++ поддерживает различные операторы:</p>
+                                <ul>
+                                    <li>Арифметические: +, -, *, /, %</li>
+                                    <li>Сравнения: ==, !=, >, <, >=, <=</li>
+                                    <li>Логические: &&, ||, !</li>
+                                    <li>Присваивания: =, +=, -=, *=, /=</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre><code>int a = 10, b = 3;
+int sum = a + b;  // 13
+int mod = a % b;  // 1
+bool result = (a > b);  // true</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-4-circle"></i> Функции</h4>
+                        <p>Функции позволяют организовать код в логические блоки.</p>
+                        <div class="code-block">
+                            <pre><code>#include &lt;iostream&gt;
+
+// Объявление функции
+int addNumbers(int a, int b);
+
+int main() {
+    int result = addNumbers(5, 7);
+    std::cout << "Сумма: " << result;
+    return 0;
+}
+
+// Определение функции
+int addNumbers(int a, int b) {
+    return a + b;
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Контроль -->
+            <div class="tab-pane fade" id="control">
+                <div class="content-section">
+                    <h2 class="section-title">Контроль выполнения</h2>
+                    <p>Управляющие конструкции для контроля потока выполнения программы.</p>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 50%"></div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-arrow-repeat"></i> Условные операторы</h4>
+                        <p>Оператор if-else позволяет выполнять код по условию.</p>
+                        <div class="code-block">
+                            <pre><code>int number = 10;
+
+if (number > 0) {
+    std::cout << "Число положительное";
+} else if (number < 0) {
+    std::cout << "Число отрицательное";
+} else {
+    std::cout << "Число равно нулю";
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-arrow-right-circle"></i> Циклы</h4>
+                                <p>Циклы позволяют повторять выполнение блока кода.</p>
+                                <p><strong>Цикл for:</strong></p>
+                                <div class="code-block">
+                                    <pre><code>for (int i = 0; i < 5; i++) {
+    std::cout << i << " ";
+}
+// Вывод: 0 1 2 3 4</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-arrow-clockwise"></i> Циклы while</h4>
+                                <p><strong>Цикл while:</strong></p>
+                                <div class="code-block">
+                                    <pre><code>int i = 0;
+while (i < 5) {
+    std::cout << i << " ";
+    i++;
+}
+// Вывод: 0 1 2 3 4</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-diagram-2"></i> Switch-case</h4>
+                        <p>Конструкция switch-case для множественного выбора.</p>
+                        <div class="code-block">
+                            <pre><code>char grade = 'B';
+
+switch (grade) {
+    case 'A':
+        std::cout << "Отлично!";
+        break;
+    case 'B':
+        std::cout << "Хорошо!";
+        break;
+    case 'C':
+        std::cout << "Удовлетворительно";
+        break;
+    default:
+        std::cout << "Неизвестная оценка";
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ООП -->
+            <div class="tab-pane fade" id="oop">
+                <div class="content-section">
+                    <h2 class="section-title">Объектно-Ориентированное Программирование</h2>
+                    <p>Принципы ООП: инкапсуляция, наследование, полиморфизм.</p>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-box"></i> Классы и объекты</h4>
+                        <p>Класс - это пользовательский тип данных, содержащий данные и методы.</p>
+                        <div class="code-block">
+                            <pre><code>class Rectangle {
+private:
+    double width, height;
+
+public:
+    // Конструктор
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    // Метод класса
+    double area() {
+        return width * height;
+    }
+};
+
+int main() {
+    Rectangle rect(5.0, 3.0);
+    std::cout << "Площадь: " << rect.area();
+    return 0;
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-layers"></i> Наследование</h4>
+                                <p>Наследование позволяет создавать новые классы на основе существующих.</p>
+                                <div class="code-block">
+                                    <pre><code>class Animal {
+public:
+    void eat() {
+        std::cout << "Я ем";
+    }
+};
+
+class Dog : public Animal {
+public:
+    void bark() {
+        std::cout << "Гав!";
+    }
+};
+
+int main() {
+    Dog myDog;
+    myDog.eat();  // Унаследованный метод
+    myDog.bark();
+    return 0;
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-shuffle"></i> Полиморфизм</h4>
+                                <p>Полиморфизм позволяет объектам разных классов обрабатываться одинаково.</p>
+                                <div class="code-block">
+                                    <pre><code>class Shape {
+public:
+    virtual void draw() = 0;  // Чистая виртуальная функция
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        std::cout << "Рисую круг";
+    }
+};
+
+class Square : public Shape {
+public:
+    void draw() override {
+        std::cout << "Рисую квадрат";
+    }
+};
+
+void drawShape(Shape* shape) {
+    shape->draw();
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro -->
+            <div class="tab-pane fade" id="pro">
+                <div class="content-section">
+                    <h2 class="section-title">Pro уровень</h2>
+                    <p>Продвинутые техники программирования на C++.</p>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-cpu"></i> Шаблоны</h4>
+                        <p>Шаблоны позволяют создавать обобщённые функции и классы.</p>
+                        <div class="code-block">
+                            <pre><code>template &lt;typename T&gt;
+T max(T a, T b) {
+    return (a > b) ? a : b;
+}
+
+int main() {
+    std::cout << max(5, 10) << "\n";      // 10
+    std::cout << max(3.14, 2.71) << "\n"; // 3.14
+    return 0;
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-people"></i> Многопоточность</h4>
+                                <p>Библиотека &lt;thread&gt; позволяет создавать многопоточные приложения.</p>
+                                <div class="code-block">
+                                    <pre><code>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+void printMessage(const std::string& message) {
+    std::cout << message << "\n";
+}
+
+int main() {
+    std::thread t1(printMessage, "Поток 1");
+    std::thread t2(printMessage, "Поток 2");
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="topic-card">
+                                <h4 class="topic-title"><i class="bi bi-speedometer2"></i> Умные указатели</h4>
+                                <p>Умные указатели автоматически управляют памятью.</p>
+                                <div class="code-block">
+                                    <pre><code>#include &lt;memory&gt;
+
+int main() {
+    // unique_ptr - эксклюзивное владение
+    std::unique_ptr&lt;int&gt; ptr1(new int(10));
+
+    // shared_ptr - разделяемое владение
+    std::shared_ptr&lt;int&gt; ptr2 = std::make_shared&lt;int&gt;(20);
+
+    return 0;
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h4 class="topic-title"><i class="bi bi-file-earmark-code"></i> STL (Standard Template Library)</h4>
+                        <p>STL предоставляет набор шаблонных классов и функций.</p>
+                        <div class="code-block">
+                            <pre><code>#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+int main() {
+    std::vector&lt;int&gt; numbers = {5, 2, 8, 1, 9};
+
+    // Сортировка
+    std::sort(numbers.begin(), numbers.end());
+
+    // Поиск
+    auto it = std::find(numbers.begin(), numbers.end(), 8);
+
+    return 0;
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Учебное пособие по C++</h5>
+                    <p>Разработано для студентов ИТ-специальностей</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="mb-0">© 2025 Богодухов В.Е., группа ИТ-408</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Анимация переключения вкладок
+        document.querySelectorAll('a[data-bs-toggle="pill"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function (event) {
+                const progressBars = document.querySelectorAll('.progress-bar');
+                progressBars.forEach(bar => {
+                    const currentWidth = bar.style.width;
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.width = currentWidth;
+                    }, 10);
+                });
+            });
+        });
+
+        // Подсветка активного раздела
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
